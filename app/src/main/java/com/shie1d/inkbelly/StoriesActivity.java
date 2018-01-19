@@ -1,9 +1,10 @@
 package com.shie1d.inkbelly;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class StoriesActivity extends AppCompatActivity {
+import com.shie1d.inkbelly.base.BaseActivity;
+
+public class StoriesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

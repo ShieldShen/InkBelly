@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="general_margin">18dp</dimen>
+    <dimen name="small_square_icon_length">42dp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
+</resources>

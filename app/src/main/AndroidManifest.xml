@@ -8,14 +8,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".StoriesActivity">
+        android:theme="@style/InkBellyTheme">
+        <activity
+            android:name=".StoriesActivity"
+            android:taskAffinity="@string/taskAffinity_main" />
+
+        <activity
+            android:name=".welcome.SplashActivity"
+            android:taskAffinity="@string/taskAffinity_main"
+            android:theme="@style/InkBellyTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PreStartActivity"
+            android:taskAffinity="@string/taskAffinity_main" />
     </application>
 
 </manifest>
