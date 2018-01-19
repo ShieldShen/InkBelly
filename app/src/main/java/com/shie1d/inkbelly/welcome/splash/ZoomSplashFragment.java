@@ -1,10 +1,11 @@
-package com.shie1d.inkbelly.welcome;
+package com.shie1d.inkbelly.welcome.splash;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +103,16 @@ public class ZoomSplashFragment extends BaseFragment implements SplashContract.I
             case R.id.tv_skip_splash:
                 mPresenter.clickSkipSplash();
                 break;
+        }
+    }
+
+    @Override
+    public void viewFinish() {
+        if (isAlive()) {
+            FragmentActivity activity = getActivity();
+            if (activity != null && !activity.isFinishing()) {
+                activity.finish();
+            }
         }
     }
 }

@@ -11,4 +11,6 @@ public interface BaseView<P extends BasePresenter> {
     void setPresenter(P presenter);
 
     Context getLogicContext();
+
+    void viewFinish();
 }

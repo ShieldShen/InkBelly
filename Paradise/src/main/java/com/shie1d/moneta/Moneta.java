@@ -66,6 +66,12 @@ public class Moneta {
         }
     }
 
+    public void release() {
+        if (mMap.containsKey(mTag)) {
+            mMap.remove(mTag);
+        }
+    }
+
     @NonNull
     private static Moneta createNew(String tag) {
         Moneta moneta = new Moneta(tag);

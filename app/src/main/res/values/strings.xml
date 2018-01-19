@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">InkBelly</string>
     <string name="taskAffinity_main">com.shie1d.inkbelly.taskAffinity.main</string>
+    <string name="process_user_info">:user_info_collection</string>
 
     <string name="skip_with_count_down">跳过\n%d秒</string>
+    <string name="corporation_info">Shie1d\'s Personal Studio</string>
 </resources>

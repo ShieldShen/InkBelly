@@ -1,4 +1,4 @@
-package com.shie1d.inkbelly.databases;
+package com.shie1d.inkbelly.databases.user;
 
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
@@ -25,22 +25,24 @@ public class UserInfoDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlCreateUserTable =
-                "CREATE TABLE " + UserInfoContract.User.TABLE_USER + " (\n" +
+        String createUserTable =
+                "CREATE TABLE " + UserInfoContract.User.NAME + " (\n" +
                         UserInfoContract.User.COLUMN_ID + " INTEGER primary key AUTOINCREMENT,\n" +
                         UserInfoContract.User.COLUMN_USER_SERVER_ID + " str,\n" +
                         UserInfoContract.Login.COLUMN_LAST_LOGIN_TIME + " datetime default (datetime('now','localtime')),\n" +
                         UserInfoContract.User.COLUMN_FLAG + " default 0,\n" +
                         UserInfoContract.User.COLUMN_DEVICE_ID + " str,\n" +
-                        UserInfoContract.User.COLUMN_IMEI + " str,\n" +
-                        UserInfoContract.User.COLUMN_PHONE_NUMBER + " str,\n" +
+                        UserInfoContract.User.COLUMN_PHONE_MODEL + " str,\n" +
+                        UserInfoContract.User.COLUMN_PHONE_BRAND + " str,\n" +
+                        UserInfoContract.User.COLUMN_PHONE_VERSION + " str,\n" +
                         UserInfoContract.User.COLUMN_EXTEND1 + " str,\n" +
                         UserInfoContract.User.COLUMN_EXTEND2 + " str,\n" +
                         UserInfoContract.User.COLUMN_EXTEND3 + " str,\n" +
+                        UserInfoContract.User.COLUMN_DELETE + " str,\n" +
                         ")";
 
-        String sqlCreateLoginTable =
-                "CREATE TABLE " + UserInfoContract.Login.TABLE_USER + " (\n" +
+        String createLoginTable =
+                "CREATE TABLE " + UserInfoContract.Login.NAME + " (\n" +
                         UserInfoContract.Login.COLUMN_ID + " INTEGER primary key AUTOINCREMENT,\n" +
                         UserInfoContract.Login.COLUMN_USER_ID + " INTEGER " +
                         UserInfoContract.Login.COLUMN_USER_LOCATION + " str,\n" +
@@ -48,12 +50,22 @@ public class UserInfoDatabase extends SQLiteOpenHelper {
                         UserInfoContract.Login.COLUMN_EXTEND1 + " str,\n" +
                         UserInfoContract.Login.COLUMN_EXTEND2 + " str,\n" +
                         UserInfoContract.Login.COLUMN_EXTEND3 + " str,\n" +
+                        UserInfoContract.Login.COLUMN_DELETE + " str,\n" +
                         "FOREIGN KEY(" + UserInfoContract.Login.COLUMN_USER_ID + ") REFERENCES " +
-                        UserInfoContract.User.TABLE_USER + "(" + UserInfoContract.User.COLUMN_ID + ")" +
+                        UserInfoContract.User.NAME + "(" + UserInfoContract.User.COLUMN_ID + ")" +
                         ")";
 
-        db.execSQL(sqlCreateUserTable);
-        db.execSQL(sqlCreateLoginTable);
+        String createDelUserTrigger =
+                "CREATE TRIGGER user_about BEFORE DELETE ON " + UserInfoContract.User.NAME + " \n" +
+                        "BEGIN\n" +
+                        "DELETE FROM " + UserInfoContract.Login.NAME + " WHERE " +
+                        UserInfoContract.Login.NAME + "." + UserInfoContract.Login.COLUMN_USER_ID + " = " +
+                        UserInfoContract.User.NAME + "." + UserInfoContract.User.COLUMN_ID + "\n" +
+                        "END";
+
+        db.execSQL(createUserTable);
+        db.execSQL(createLoginTable);
+        db.execSQL(createDelUserTrigger);
     }
 
     @Override

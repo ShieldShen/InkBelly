@@ -10,11 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/InkBellyTheme">
         <activity
-            android:name=".StoriesActivity"
-            android:taskAffinity="@string/taskAffinity_main" />
-
-        <activity
-            android:name=".welcome.SplashActivity"
+            android:name=".welcome.splash.SplashActivity"
             android:taskAffinity="@string/taskAffinity_main"
             android:theme="@style/InkBellyTheme.FullScreen">
             <intent-filter>
@@ -24,8 +20,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PreStartActivity"
+            android:name=".welcome.pre.PreStartActivity"
+            android:taskAffinity="@string/taskAffinity_main"
+            android:theme="@style/InkBellyTheme.FullScreen" />
+        <activity
+            android:name=".StoriesActivity"
             android:taskAffinity="@string/taskAffinity_main" />
+
+        <service
+            android:name=".welcome.pre.UserInfoService"
+            android:enabled="true"
+            android:exported="false"
+            android:process="@string/process_user_info" />
+
+        <provider
+            android:name=".databases.user.UserInfoContentProvider"
+            android:authorities="com.shie1d.inkbelly.provider.user"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

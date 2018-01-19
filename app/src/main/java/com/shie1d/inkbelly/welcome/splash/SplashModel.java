@@ -1,4 +1,4 @@
-package com.shie1d.inkbelly.welcome;
+package com.shie1d.inkbelly.welcome.splash;
 
 import com.shie1d.inkbelly.base.mvp.BaseModel;
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.shie1d.moneta.Moneta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,8 +49,14 @@ public abstract class Themis<P, R> {
         filters.add(filter);
     }
 
-    private R process() throws Exception {
+    public void addWorker(Worker<P, R> worker) {
+        workers.add(worker);
+    }
+
+    private List<R> process() throws Exception {
         List<Filter<P>> inheritFilters = new ArrayList<>();
+        List<R> results = new ArrayList<>();
+        onProcessStart();
         //先把处理的对象校验一遍
         for (Filter<P> filter : filters) {
             if (filter.isInherit()) {
@@ -57,7 +64,7 @@ public abstract class Themis<P, R> {
                 continue;
             }
             if (!filter.filter(product, bundle)) {
-                rawProductNotAllowed();
+                onFilterInterrupted(filter);
                 return null;
             }
         }
@@ -66,29 +73,40 @@ public abstract class Themis<P, R> {
             interceptor.intercept(product, bundle);
         }
 
-        R result = null;
         for (Worker<P, R> worker : workers) {
             worker.setFilters(inheritFilters);
-            result = worker.process(product, bundle, result);
+            R result = worker.process(product, bundle, results);
             if (START_MODE == Mode.HANDLED_BREAK && result != null) {
-                return result;
+                results.add(result);
+                onProcessEnd();
+                return results;
             }
         }
-        return result;
+        return results;
+    }
+
+    protected void onProcessStart() {
+
+    }
+
+    protected void onProcessEnd() {
+
     }
 
     /**
      * 要处理的对象在首次运行时的校验就失败了
      */
-    abstract void rawProductNotAllowed();
+    protected void onFilterInterrupted(Filter<P> filter) {
 
-    public R run() {
+    }
+
+    public List<R> run() {
         try {
             return process();
         } catch (Exception e) {
             Moneta.use("Themis").e("Some error occurs during working flow");
             e.printStackTrace();
         }
-        return null;
+        return Collections.emptyList();
     }
 }

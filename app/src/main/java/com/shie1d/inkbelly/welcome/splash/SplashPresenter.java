@@ -1,5 +1,6 @@
-package com.shie1d.inkbelly.welcome;
+package com.shie1d.inkbelly.welcome.splash;
 
+import com.shie1d.inkbelly.welcome.pre.PreStartActivity;
 import com.shie1d.moneta.Moneta;
 import com.shie1d.ophion.Ophion;
 
@@ -23,7 +24,7 @@ public class SplashPresenter implements SplashContract.ISplashPresenter {
     @Override
     public void init(SplashContract.ISplashView view) {
         mView = view;
-        mMoneta = Moneta.use("Splash");
+        mMoneta = Moneta.use("Splash", Moneta.LIMIT.NO);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class SplashPresenter implements SplashContract.ISplashPresenter {
 
     @Override
     public void release() {
-        Moneta.release("Splash");
+        mMoneta.release();
         mView = null;
     }
 
@@ -50,13 +51,13 @@ public class SplashPresenter implements SplashContract.ISplashPresenter {
                 .doOnComplete(new Action() {
                     @Override
                     public void run() throws Exception {
-                        endOfSplash(0);
+                        endOfSplash(EndMode.NORMAL);
                     }
                 })
                 .doOnError(new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        endOfSplash(1);
+                        endOfSplash(EndMode.ERROR);
                     }
                 })
                 .subscribe();
@@ -67,7 +68,7 @@ public class SplashPresenter implements SplashContract.ISplashPresenter {
         if (mCountingDownJob != null && !mCountingDownJob.isDisposed()) {
             mCountingDownJob.dispose();
         }
-        endOfSplash(2);
+        endOfSplash(EndMode.FORCE);
     }
 
     @Override
@@ -84,5 +85,13 @@ public class SplashPresenter implements SplashContract.ISplashPresenter {
      */
     private void endOfSplash(int endMode) {
         mMoneta.d("endOfSplash Code : " + endMode);
+        PreStartActivity.start(mView.getLogicContext());
+        mView.viewFinish();
+    }
+
+    private interface EndMode {
+        int NORMAL = 0;
+        int ERROR = 1;
+        int FORCE = 2;
     }
 }
