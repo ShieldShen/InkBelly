@@ -1,7 +1,6 @@
 package com.shie1d.inkbelly.databases.user;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -11,15 +10,15 @@ import com.shie1d.moneta.Moneta;
  * 数据库存放用户信息
  */
 
-public class UserInfoDatabase extends SQLiteOpenHelper {
+public class UserInfoDatabaseOpenHelper extends SQLiteOpenHelper {
     private static final int INIT_VERSION = 101;
 
     private static final int CURRENT_VERSION = 101;
     private final Moneta mMoneta;
 
-    public UserInfoDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
-        super(context, name, null, CURRENT_VERSION, null);
-        mMoneta = Moneta.use("UserInfoDatabase", Moneta.LIMIT.NO);
+    UserInfoDatabaseOpenHelper(Context context) {
+        super(context, UserInfoContract.DATABASE_NAME, null, CURRENT_VERSION, null);
+        mMoneta = Moneta.use("UserInfoDatabaseOpenHelper");
         mMoneta.d("Database init");
     }
 

@@ -4,8 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.shie1d.inkbelly.databases.user.UserInfoDatabase;
-
 public class UserInfoService extends Service {
     public UserInfoService() {
     }

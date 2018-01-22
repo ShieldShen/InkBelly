@@ -11,6 +11,7 @@ import com.shie1d.inkbelly.databases.base.BaseTableContract;
 public interface UserInfoContract extends BaseTableContract {
     String AUTHORITY = "com.shie1d.inkbelly.provider.user";
     Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+    String DATABASE_NAME = "UserInfo";
 
     interface User extends BaseTableContract {
         String NAME = "user";
