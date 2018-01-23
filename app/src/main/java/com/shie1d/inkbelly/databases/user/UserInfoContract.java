@@ -10,11 +10,12 @@ import com.shie1d.inkbelly.databases.base.BaseTableContract;
 
 public interface UserInfoContract extends BaseTableContract {
     String AUTHORITY = "com.shie1d.inkbelly.provider.user";
-    Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+    Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
     String DATABASE_NAME = "UserInfo";
 
     interface User extends BaseTableContract {
         String NAME = "user";
+        Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, NAME);
 
         String COLUMN_USER_SERVER_ID = "user_server_id";
         String COLUMN_FLAG = "flag";
@@ -26,6 +27,7 @@ public interface UserInfoContract extends BaseTableContract {
 
     interface Login extends BaseTableContract {
         String NAME = "login";
+        Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, NAME);
 
         String COLUMN_USER_ID = "user_id";
         String COLUMN_LAST_LOGIN_TIME = "last_login_time";

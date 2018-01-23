@@ -154,7 +154,7 @@ public abstract class BaseContentProvider<U extends BaseDbUnit> extends ContentP
     }
 
     private boolean isApplyingBatch() {
-        return isApplyingBatch.get();
+        return isApplyingBatch.get() != null && isApplyingBatch.get();
     }
 
     protected void sendActionCompleteNotice(Uri uri) {

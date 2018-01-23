@@ -24,16 +24,49 @@ class UserInfoLogic extends BaseDbUnit {
 
     Uri insertLogin(Uri uri, ContentValues values) {
         long insert = mDb.insert(UserInfoContract.Login.NAME, null, values);
+        if (insert <= 0) {
+            return null;
+        }
         return ContentUris.withAppendedId(uri, insert);
     }
 
     Uri insertUser(Uri uri, ContentValues values) {
         long insert = mDb.insert(UserInfoContract.User.NAME, null, values);
+        if (insert <= 0) {
+            return null;
+        }
         return ContentUris.withAppendedId(uri, insert);
     }
 
     int deleteLogin(Uri uri, String selection, String[] selectionArgs) {
+        return mDb.delete(UserInfoContract.Login.NAME, extractIdSelectionFromUri(uri, selection), selectionArgs);
+    }
+
+    int deleteUser(Uri uri, String selection, String[] selectionArgs) {
+        return mDb.delete(UserInfoContract.User.NAME, extractIdSelectionFromUri(uri, selection), selectionArgs);
+    }
+
+    Cursor queryLogin(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        return mDb.query(UserInfoContract.Login.NAME, projection, extractIdSelectionFromUri(uri, selection), selectionArgs, null, null, sortOrder);
+    }
+
+    Cursor queryUser(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        return mDb.query(UserInfoContract.User.NAME, projection, extractIdSelectionFromUri(uri, selection), selectionArgs, null, null, sortOrder);
+    }
+
+    int updateLogin(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        return mDb.update(UserInfoContract.Login.NAME, values, extractIdSelectionFromUri(uri, selection), selectionArgs);
+    }
+
+    int updateUser(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        return mDb.update(UserInfoContract.User.NAME, values, extractIdSelectionFromUri(uri, selection), selectionArgs);
+    }
+
+    private String extractIdSelectionFromUri(Uri uri, String selection) {
         String idStr = uri.getLastPathSegment();
+        if (Chaos.isEmpty(idStr)) {
+            return selection;
+        }
         try {
             long id = Long.parseLong(idStr);
             if (Chaos.isEmpty(selection)) {
@@ -41,31 +74,10 @@ class UserInfoLogic extends BaseDbUnit {
             } else {
                 selection = selection + SqlOperation.AND + BaseTableContract.COLUMN_ID + SqlOperation.EQUALS + id;
             }
-            return mDb.delete(UserInfoContract.Login.NAME, selection, selectionArgs);
+
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
-        return 0;
-    }
-
-    public int deleteUser(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
-    }
-
-    public Cursor queryLogin(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
-    }
-
-    public Cursor queryUser(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
-    }
-
-    public int updateLogin(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
-    }
-
-    public int updateUser(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        return selection;
     }
 }

@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:process="@string/process_main"
         android:theme="@style/InkBellyTheme">
         <activity
             android:name=".welcome.splash.SplashActivity"
@@ -36,8 +37,9 @@
         <provider
             android:name=".databases.user.UserInfoContentProvider"
             android:authorities="com.shie1d.inkbelly.provider.user"
+            android:process="@string/process_user_info"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -11,12 +11,10 @@ import java.util.List;
  * 启动用户信息相关工作
  */
 
-public class UserInfoWorker extends Worker<Context, Void> {
+public class UserInfoWorker extends Worker<Context, Boolean> {
     @Override
-    protected Void run(Context product, Bundle bundle, List<Void> lastResult) throws Exception {
-        synchronized (product) {
-
-        }
-        return null;
+    protected Boolean run(Context context, Bundle bundle, List<Boolean> lastResult) throws Exception {
+        UserInfoService.start(context);
+        return true;
     }
 }

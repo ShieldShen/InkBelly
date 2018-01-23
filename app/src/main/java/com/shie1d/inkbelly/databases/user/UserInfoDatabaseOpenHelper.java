@@ -29,7 +29,7 @@ public class UserInfoDatabaseOpenHelper extends SQLiteOpenHelper {
                         UserInfoContract.User.COLUMN_ID + " INTEGER primary key AUTOINCREMENT,\n" +
                         UserInfoContract.User.COLUMN_USER_SERVER_ID + " str,\n" +
                         UserInfoContract.Login.COLUMN_LAST_LOGIN_TIME + " datetime default (datetime('now','localtime')),\n" +
-                        UserInfoContract.User.COLUMN_FLAG + " default 0,\n" +
+                        UserInfoContract.User.COLUMN_FLAG + " INTEGER default 0,\n" +
                         UserInfoContract.User.COLUMN_DEVICE_ID + " str,\n" +
                         UserInfoContract.User.COLUMN_PHONE_MODEL + " str,\n" +
                         UserInfoContract.User.COLUMN_PHONE_BRAND + " str,\n" +
@@ -37,8 +37,8 @@ public class UserInfoDatabaseOpenHelper extends SQLiteOpenHelper {
                         UserInfoContract.User.COLUMN_EXTEND1 + " str,\n" +
                         UserInfoContract.User.COLUMN_EXTEND2 + " str,\n" +
                         UserInfoContract.User.COLUMN_EXTEND3 + " str,\n" +
-                        UserInfoContract.User.COLUMN_DELETE + " str,\n" +
-                        ")";
+                        UserInfoContract.User.COLUMN_DELETE + " INTEGER default 0\n" +
+                        ");";
 
         String createLoginTable =
                 "CREATE TABLE " + UserInfoContract.Login.NAME + " (\n" +
@@ -49,18 +49,18 @@ public class UserInfoDatabaseOpenHelper extends SQLiteOpenHelper {
                         UserInfoContract.Login.COLUMN_EXTEND1 + " str,\n" +
                         UserInfoContract.Login.COLUMN_EXTEND2 + " str,\n" +
                         UserInfoContract.Login.COLUMN_EXTEND3 + " str,\n" +
-                        UserInfoContract.Login.COLUMN_DELETE + " str,\n" +
+                        UserInfoContract.Login.COLUMN_DELETE + " INTEGER default 0,\n" +
                         "FOREIGN KEY(" + UserInfoContract.Login.COLUMN_USER_ID + ") REFERENCES " +
                         UserInfoContract.User.NAME + "(" + UserInfoContract.User.COLUMN_ID + ")" +
-                        ")";
+                        ");";
 
         String createDelUserTrigger =
                 "CREATE TRIGGER user_about BEFORE DELETE ON " + UserInfoContract.User.NAME + " \n" +
                         "BEGIN\n" +
                         "DELETE FROM " + UserInfoContract.Login.NAME + " WHERE " +
                         UserInfoContract.Login.NAME + "." + UserInfoContract.Login.COLUMN_USER_ID + " = " +
-                        UserInfoContract.User.NAME + "." + UserInfoContract.User.COLUMN_ID + "\n" +
-                        "END";
+                        UserInfoContract.User.NAME + "." + UserInfoContract.User.COLUMN_ID + ";\n" +
+                        "END;";
 
         db.execSQL(createUserTable);
         db.execSQL(createLoginTable);

@@ -2,6 +2,7 @@ package com.shie1d.ophion;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.shie1d.Chaos;
@@ -28,8 +29,16 @@ public class Ophion {
         t(context, msg, Toast.LENGTH_SHORT);
     }
 
+    public static void sT(Context context, int msgId) {
+        t(context, msgId, Toast.LENGTH_SHORT);
+    }
+
     public static void lT(Context context, String msg) {
         t(context, msg, Toast.LENGTH_LONG);
+    }
+
+    public static void lT(Context context, int msgId) {
+        t(context, msgId, Toast.LENGTH_LONG);
     }
 
     @SuppressLint("ShowToast")
@@ -44,6 +53,15 @@ public class Ophion {
             mToast.setDuration(duration);
         }
         mToast.show();
+    }
+
+    @SuppressLint("ShowToast")
+    private static void t(Context context, int msgId, int duration) {
+        if (context == null) {
+            return;
+        }
+        String msg = context.getString(msgId);
+        t(context, msg, duration);
     }
 
 

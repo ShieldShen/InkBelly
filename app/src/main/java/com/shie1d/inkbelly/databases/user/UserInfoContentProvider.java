@@ -32,7 +32,7 @@ public class UserInfoContentProvider extends BaseContentProvider<UserInfoLogic> 
 
     @Override
     protected Uri getContentUri() {
-        return UserInfoContract.CONTENT_URI;
+        return UserInfoContract.BASE_CONTENT_URI;
     }
 
     private interface MATCH {
@@ -44,7 +44,9 @@ public class UserInfoContentProvider extends BaseContentProvider<UserInfoLogic> 
 
     static {
         mUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        mUriMatcher.addURI(UserInfoContract.AUTHORITY, UserInfoContract.User.NAME, MATCH.USER);
         mUriMatcher.addURI(UserInfoContract.AUTHORITY, UserInfoContract.User.NAME + "/#", MATCH.USER_ID);
+        mUriMatcher.addURI(UserInfoContract.AUTHORITY, UserInfoContract.Login.NAME, MATCH.LOGIN);
         mUriMatcher.addURI(UserInfoContract.AUTHORITY, UserInfoContract.Login.NAME + "/#", MATCH.LOGIN_ID);
     }
 
@@ -56,10 +58,14 @@ public class UserInfoContentProvider extends BaseContentProvider<UserInfoLogic> 
     public String getType(@NonNull Uri uri) {
         int match = mUriMatcher.match(uri);
         switch (match) {
+            case MATCH.USER:
+                return "vnd.android.cursor.dir/user";
             case MATCH.USER_ID:
                 return "vnd.android.cursor.item/user";
+            case MATCH.LOGIN:
+                return "vnd.android.cursor.dir/login";
             case MATCH.LOGIN_ID:
-                return "vnd.android.cursor.item/user";
+                return "vnd.android.cursor.item/login";
             default:
                 throw new IllegalArgumentException("no match type for " + uri);
         }
@@ -83,8 +89,10 @@ public class UserInfoContentProvider extends BaseContentProvider<UserInfoLogic> 
         int match = mUriMatcher.match(uri);
         switch (match) {
             case MATCH.LOGIN_ID:
+            case MATCH.LOGIN:
                 return unit().deleteLogin(uri, selection, selectionArgs);
             case MATCH.USER_ID:
+            case MATCH.USER:
                 return unit().deleteUser(uri, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("错误的delete uri :" + uri);
@@ -96,8 +104,10 @@ public class UserInfoContentProvider extends BaseContentProvider<UserInfoLogic> 
         int match = mUriMatcher.match(uri);
         switch (match) {
             case MATCH.LOGIN_ID:
+            case MATCH.LOGIN:
                 return unit().queryLogin(uri, projection, selection, selectionArgs, sortOrder);
             case MATCH.USER_ID:
+            case MATCH.USER:
                 return unit().queryUser(uri, projection, selection, selectionArgs, sortOrder);
             default:
                 throw new IllegalArgumentException("错误的query uri :" + uri);
@@ -109,8 +119,10 @@ public class UserInfoContentProvider extends BaseContentProvider<UserInfoLogic> 
         int match = mUriMatcher.match(uri);
         switch (match) {
             case MATCH.LOGIN_ID:
+            case MATCH.LOGIN:
                 return unit().updateLogin(uri, values, selection, selectionArgs);
             case MATCH.USER_ID:
+            case MATCH.USER:
                 return unit().updateUser(uri, values, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("错误的update uri :" + uri);

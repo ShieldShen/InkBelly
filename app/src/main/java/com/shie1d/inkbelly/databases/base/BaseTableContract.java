@@ -11,5 +11,5 @@ public interface BaseTableContract {
     String COLUMN_EXTEND2 = "extend2";
     String COLUMN_EXTEND3 = "extend3";
 
-    String COLUMN_DELETE = "delete";
+    String COLUMN_DELETE = "deleted";
 }

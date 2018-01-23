@@ -82,6 +82,7 @@ public abstract class Themis<P, R> {
                 return results;
             }
         }
+        onProcessEnd();
         return results;
     }
 
