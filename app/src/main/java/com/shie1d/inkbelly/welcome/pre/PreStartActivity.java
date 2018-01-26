@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.shie1d.inkbelly.R;
-import com.shie1d.inkbelly.StoriesActivity;
+import com.shie1d.inkbelly.stories.StoriesActivity;
 import com.shie1d.inkbelly.base.FullScreenActivity;
 import com.shie1d.ophion.Ophion;
 

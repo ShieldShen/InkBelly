@@ -7,4 +7,9 @@
     <color name="text_color_normal_hint">#b9b9b9</color>
 
     <color name="color_complete_transparent">#00000000</color>
+
+    <color name="normal_background_base_color">#d7d7d7</color>
+
+    <color name="card_view_normal_background_color">#f1f1f1</color>
+    <color name="story_brief_title_background_color">#38ff0000</color>
 </resources>

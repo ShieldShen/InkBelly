@@ -14,6 +14,6 @@ public class SplashActivity extends FullScreenActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initFragment(new ZoomSplashFragment());
+        initFragment(ZoomSplashFragment.create());
     }
 }

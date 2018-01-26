@@ -28,11 +28,6 @@ public class SplashPresenter implements SplashContract.ISplashPresenter {
     }
 
     @Override
-    public void refresh(SplashModel model) {
-
-    }
-
-    @Override
     public void release() {
         mMoneta.release();
         mView = null;

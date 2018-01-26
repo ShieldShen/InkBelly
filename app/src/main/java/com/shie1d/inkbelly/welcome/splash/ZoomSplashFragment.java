@@ -27,6 +27,10 @@ public class ZoomSplashFragment extends BaseFragment implements SplashContract.I
     TextView mTVSkipSplash;
     private SplashContract.ISplashPresenter mPresenter;
 
+    public static ZoomSplashFragment create() {
+        return new ZoomSplashFragment();
+    }
+
     @Override
     public void setPresenter(SplashContract.ISplashPresenter presenter) {
         mPresenter = presenter;

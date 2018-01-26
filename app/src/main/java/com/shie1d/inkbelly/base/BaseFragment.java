@@ -27,13 +27,22 @@ public abstract class BaseFragment extends Fragment {
         onDetachInner();
     }
 
-    public boolean isAlive(){
+    public boolean isAlive() {
         return !isDetached() && isAdded() && validRecycleFields();
     }
 
+    /**
+     * 用来获取界面的字段对象是否可用
+     */
     protected abstract boolean validRecycleFields();
 
+    /**
+     * 在onAttach时调用
+     */
     protected abstract void onAttachInner(Context context);
 
+    /**
+     * 在onDetach时调用
+     */
     protected abstract void onDetachInner();
 }

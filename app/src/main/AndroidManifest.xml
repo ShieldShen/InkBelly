@@ -2,13 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shie1d.inkbelly">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:process="@string/process_main"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:process="@string/process_main"
         android:theme="@style/InkBellyTheme">
         <activity
             android:name=".welcome.splash.SplashActivity"
@@ -25,7 +28,7 @@
             android:taskAffinity="@string/taskAffinity_main"
             android:theme="@style/InkBellyTheme.FullScreen" />
         <activity
-            android:name=".StoriesActivity"
+            android:name=".stories.StoriesActivity"
             android:taskAffinity="@string/taskAffinity_main" />
 
         <service
@@ -37,9 +40,9 @@
         <provider
             android:name=".databases.user.UserInfoContentProvider"
             android:authorities="com.shie1d.inkbelly.provider.user"
-            android:process="@string/process_user_info"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:process="@string/process_user_info" />
     </application>
 
 </manifest>

@@ -5,5 +5,4 @@ package com.shie1d.inkbelly.base.mvp;
  */
 
 public interface BaseModel {
-    void update();
 }

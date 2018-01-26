@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="general_margin">18dp</dimen>
-    <dimen name="general_margin_extra">36dp</dimen>
+    <dimen name="general_margin_tiny">4dp</dimen>
+    <dimen name="general_margin_small">8dp</dimen>
+    <dimen name="general_margin">16dp</dimen>
+    <dimen name="general_margin_extra">32dp</dimen>
+
+    <dimen name="general_text_padding_vertical">2dp</dimen>
+    <dimen name="general_text_padding_horizontal">6dp</dimen>
 
     <dimen name="small_square_icon_length">42dp</dimen>
     <dimen name="small_text_size">12sp</dimen>
+    <dimen name="stories_item_title_text_size">18sp</dimen>
+
+    <dimen name="card_view_normal_corner_radius">12dp</dimen>
+    <dimen name="card_view_height">180dp</dimen>
 
     <dimen name="normal_square_icon_length">60dp</dimen>
+
+    <dimen name="elevation_base_background">0dp</dimen>
+    <dimen name="elevation_card_view_resting">1dp</dimen>
+    <dimen name="elevation_card_view_picked_up">7dp</dimen>
 
 </resources>

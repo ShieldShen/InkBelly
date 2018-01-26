@@ -7,8 +7,4 @@ import com.shie1d.inkbelly.base.mvp.BaseModel;
  */
 
 public class SplashModel implements BaseModel {
-    @Override
-    public void update() {
-        
-    }
 }

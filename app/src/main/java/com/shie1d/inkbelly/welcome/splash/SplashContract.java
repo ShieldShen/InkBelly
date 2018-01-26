@@ -12,7 +12,7 @@ public interface SplashContract {
         void setSkipCounting(long counting);
     }
 
-    interface ISplashPresenter extends BasePresenter<ISplashView, SplashModel> {
+    interface ISplashPresenter extends BasePresenter<ISplashView> {
 
         void countingDown();
 
