@@ -2,6 +2,8 @@ package com.shie1d.inkbelly.net.zhihudaily.bean;
 
 import com.shie1d.inkbelly.stories.StoriesAdapter;
 
+import java.util.List;
+
 /**
  * 故事简介
  */
@@ -9,7 +11,7 @@ import com.shie1d.inkbelly.stories.StoriesAdapter;
 public class StoryBrief {
     public int viewType = StoriesAdapter.ViewType.STORY_BRIEF;
     public long date;
-    public String image;
+    public List<String> images;
     public int type;
     public long id;
     public String ga_prefix;
