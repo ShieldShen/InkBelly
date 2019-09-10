@@ -3,21 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/view_center"
-        style="@style/Center_Place_Holder" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_stories"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_pull_latest"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/pg_bar_loading_stories"
-        android:layout_width="@dimen/normal_square_icon_length"
-        android:layout_height="@dimen/normal_square_icon_length"
-        android:layout_above="@id/view_center"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/general_margin" />
-
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_stories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

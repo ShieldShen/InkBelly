@@ -35,6 +35,6 @@ ext {
     JAVA_TARGET_VERSION = JavaVersion.VERSION_1_7
 
     // App dependencies
-    supportLibraryVersion = '27.0.2'
+    supportLibraryVersion = '27.1.1'
     firebaseVersion = '10.2.6'
 }

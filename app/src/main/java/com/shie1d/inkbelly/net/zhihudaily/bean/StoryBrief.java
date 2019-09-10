@@ -10,14 +10,15 @@ import java.util.List;
 
 public class StoryBrief {
     public int viewType = StoriesAdapter.ViewType.STORY_BRIEF;
-    public long date;
+    public String date;
     public List<String> images;
+    public String image;
     public int type;
     public long id;
     public String ga_prefix;
     public String title;
 
-    public StoryBrief(long date) {
+    public StoryBrief(String date) {
         this.date = date;
         this.viewType = StoriesAdapter.ViewType.DATE;
     }

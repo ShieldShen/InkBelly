@@ -16,7 +16,7 @@ import java.util.WeakHashMap;
 
 public class Moneta {
     private static boolean isDebug = BuildConfig.DEBUG;
-    private final static String DEV_TAG = "shie1d";
+    private final static String DEV_TAG = "shie1d_Debug";
     private static final int DEFAULT_LIMIT = LIMIT.NO;
 
     public interface LIMIT {

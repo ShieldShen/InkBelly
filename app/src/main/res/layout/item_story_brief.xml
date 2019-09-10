@@ -15,12 +15,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="@dimen/elevation_card_view_resting"
-        app:cardBackgroundColor="@color/card_view_normal_background_color"
+        app:cardBackgroundColor="@null"
         app:cardCornerRadius="@dimen/card_view_normal_corner_radius"
         app:cardElevation="@dimen/elevation_card_view_resting"
         app:cardMaxElevation="@dimen/elevation_card_view_picked_up"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true">
+
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/card_view_normal_background_color"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/tv_story_title"

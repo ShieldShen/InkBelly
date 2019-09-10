@@ -10,7 +10,11 @@ import com.shie1d.inkbelly.base.mvp.BaseView;
 public interface StoriesContract {
     interface IStoriesPresenter extends BasePresenter<IStoriesView> {
 
-        void pullDataFromServer();
+        void pullLatestStoriesFromServer();
+
+        void pullPastStoriesFromServer();
+
+        boolean shouldAutoPullData(int position);
     }
 
     interface IStoriesView extends BaseView<IStoriesPresenter> {

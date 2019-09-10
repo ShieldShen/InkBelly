@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.ProgressBar;
 
 import com.shie1d.inkbelly.R;
 import com.shie1d.inkbelly.base.BaseFragment;
@@ -21,12 +20,13 @@ import com.shie1d.moneta.Moneta;
  * Stories 界面显示
  */
 
-public class StoriesFragment extends BaseFragment implements StoriesContract.IStoriesView {
+public class StoriesFragment extends BaseFragment
+        implements StoriesContract.IStoriesView, SwipeRefreshLayout.OnRefreshListener, OnItemShowCallback {
 
     private StoriesContract.IStoriesPresenter mPresenter;
     private RecyclerView mRVStories;
-    private ProgressBar mPGBarLoading;
     private StoriesAdapter mStoriesAdapter;
+    private SwipeRefreshLayout mSRL;
 
     public static StoriesFragment create() {
         return new StoriesFragment();
@@ -77,29 +77,41 @@ public class StoriesFragment extends BaseFragment implements StoriesContract.ISt
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mSRL = view.findViewById(R.id.srl_pull_latest);
+        mSRL.setOnRefreshListener(this);
         mRVStories = view.findViewById(R.id.rv_stories);
         mRVStories.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mStoriesAdapter = new StoriesAdapter(getActivity());
+        mStoriesAdapter = new StoriesAdapter(getActivity(), this);
         mRVStories.setAdapter(mStoriesAdapter);
-        mPGBarLoading = view.findViewById(R.id.pg_bar_loading_stories);
-        mPGBarLoading.setInterpolator(new AccelerateDecelerateInterpolator());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.pullDataFromServer();
+        mPresenter.pullLatestStoriesFromServer();
     }
 
     @Override
     public void refresh(StoriesModel model) {
-//        Moneta.q("result: " + model.toString());
-        mStoriesAdapter.inflateStories(model.getStories(), model.getDateMillis());
+        Moneta.q("result: " + model.toString());
+        mStoriesAdapter.inflateStories(model);
         mStoriesAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void loading(boolean isLoading) {
-        mPGBarLoading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        mSRL.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.pullLatestStoriesFromServer();
+    }
+
+    @Override
+    public void onItemShowed(int position) {
+        if (mPresenter.shouldAutoPullData(position)) {
+            mPresenter.pullPastStoriesFromServer();
+        }
     }
 }
