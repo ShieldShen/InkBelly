@@ -20,5 +20,5 @@ public interface ZhihuDailyService {
     Observable<StoriesCollection> getPastStoriesCollection(@Path("date") String date);
 
     @GET("news/{id}")
-    Observable<StoryDetail> getStoryDetailCollection(@Path("id") int id);
+    Observable<StoryDetail> getStoryDetailCollection(@Path("id") long id);
 }

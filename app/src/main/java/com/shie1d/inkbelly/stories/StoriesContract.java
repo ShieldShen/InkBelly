@@ -2,6 +2,7 @@ package com.shie1d.inkbelly.stories;
 
 import com.shie1d.inkbelly.base.mvp.BasePresenter;
 import com.shie1d.inkbelly.base.mvp.BaseView;
+import com.shie1d.inkbelly.net.zhihudaily.bean.StoryBrief;
 
 /**
  * 故事列表页功能目录
@@ -15,6 +16,8 @@ public interface StoriesContract {
         void pullPastStoriesFromServer();
 
         boolean shouldAutoPullData(int position);
+
+        void enterStory(StoryBrief clickedItem);
     }
 
     interface IStoriesView extends BaseView<IStoriesPresenter> {

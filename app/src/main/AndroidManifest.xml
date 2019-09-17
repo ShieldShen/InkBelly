@@ -30,6 +30,9 @@
         <activity
             android:name=".stories.StoriesActivity"
             android:taskAffinity="@string/taskAffinity_main" />
+        <activity
+            android:name=".story.StoryActivity"
+            android:taskAffinity="@string/taskAffinity_main" />
 
         <service
             android:name=".welcome.pre.UserInfoService"

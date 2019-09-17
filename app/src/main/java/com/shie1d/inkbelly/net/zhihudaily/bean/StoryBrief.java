@@ -1,15 +1,19 @@
 package com.shie1d.inkbelly.net.zhihudaily.bean;
 
-import com.shie1d.inkbelly.stories.StoriesAdapter;
-
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 故事简介
  */
 
-public class StoryBrief {
-    public int viewType = StoriesAdapter.ViewType.STORY_BRIEF;
+public class StoryBrief implements Serializable{
+    public interface TYPE {
+        int STORY_BRIEF = 0;
+        int DATE = 1;
+    }
+
+    public int viewType = TYPE.STORY_BRIEF;
     public String date;
     public List<String> images;
     public String image;
@@ -20,6 +24,6 @@ public class StoryBrief {
 
     public StoryBrief(String date) {
         this.date = date;
-        this.viewType = StoriesAdapter.ViewType.DATE;
+        this.viewType = TYPE.DATE;
     }
 }

@@ -30,19 +30,20 @@ import java.util.List;
  */
 
 public class StoriesAdapter extends Adapter<StoriesAdapter.Holder> {
-    public interface ViewType {
 
-        int STORY_BRIEF = 0;
-        int DATE = 1;
-    }
+
     private final OnItemShowCallback mOnItemShowCallback;
+    private final OnItemClickCallback mOnItemClickCallback;
 
     private int mContainerWidth;
     private int mContainerHeight;
     private List<StoryBrief> mStories;
 
-    StoriesAdapter(Context context, OnItemShowCallback onItemShowCallback) {
+    StoriesAdapter(Context context,
+                   OnItemShowCallback onItemShowCallback,
+                   OnItemClickCallback onItemClickCallback) {
         mOnItemShowCallback = onItemShowCallback;
+        mOnItemClickCallback = onItemClickCallback;
         mStories = new ArrayList<>();
         Resources resources = context.getResources();
         mContainerWidth = resources.getDisplayMetrics().widthPixels - 2 * resources.getDimensionPixelSize(R.dimen.general_margin_small);
@@ -52,7 +53,10 @@ public class StoriesAdapter extends Adapter<StoriesAdapter.Holder> {
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return Holder.create(parent, viewType, mContainerWidth, mContainerHeight, mOnItemShowCallback);
+        return Holder.create(parent,
+                viewType, mContainerWidth, mContainerHeight,
+                mOnItemShowCallback,
+                mOnItemClickCallback);
     }
 
     @Override
@@ -78,6 +82,7 @@ public class StoriesAdapter extends Adapter<StoriesAdapter.Holder> {
 
         private int mViewType;
         private OnItemShowCallback mOnItemShowCallback;
+        private OnItemClickCallback mOnItemClickCallback;
         private CardView mContainerView;
         private ImageView mIvBackground;
         private TextView mTVTitle;
@@ -94,11 +99,12 @@ public class StoriesAdapter extends Adapter<StoriesAdapter.Holder> {
 
         static Holder create(ViewGroup parent, int viewType,
                              int containerWidth, int containerHeight,
-                             OnItemShowCallback onItemShowCallback) {
+                             OnItemShowCallback onItemShowCallback,
+                             OnItemClickCallback onItemClickCallback) {
             int id;
-            if (viewType == ViewType.STORY_BRIEF) {
+            if (viewType == StoryBrief.TYPE.STORY_BRIEF) {
                 id = R.layout.item_story_brief;
-            } else if (viewType == ViewType.DATE) {
+            } else if (viewType == StoryBrief.TYPE.DATE) {
                 id = R.layout.item_stories_date;
             } else {
                 throw new IllegalArgumentException("没有匹配的ViewType :" + viewType);
@@ -106,29 +112,31 @@ public class StoriesAdapter extends Adapter<StoriesAdapter.Holder> {
 
             Holder holder = new Holder(LayoutInflater.from(parent.getContext()).inflate(id, null));
             holder.mViewType = viewType;
-            holder.init(containerWidth, containerHeight, onItemShowCallback);
+            holder.init(containerWidth, containerHeight, onItemShowCallback, onItemClickCallback);
             return holder;
         }
 
         private void init(int containerWidth, int containerHeight,
-                          OnItemShowCallback onItemShowCallback) {
+                          OnItemShowCallback onItemShowCallback,
+                          OnItemClickCallback onItemClickCallback) {
             mContainerWidth = containerWidth;
             mContainerHeight = containerHeight;
             mOnItemShowCallback = onItemShowCallback;
-            if (mViewType == ViewType.STORY_BRIEF) {
+            mOnItemClickCallback = onItemClickCallback;
+            if (mViewType == StoryBrief.TYPE.STORY_BRIEF) {
                 mContainerView = itemView.findViewById(R.id.cv_container);
                 mIvBackground = itemView.findViewById(R.id.iv_background);
                 mTVTitle = itemView.findViewById(R.id.tv_story_title);
                 mContainerView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mCurStoryBrief != null && mCurStoryBrief.id > 0) {
-                            //TODO Click Item
+                        if (mOnItemClickCallback != null) {
                             Moneta.q("click : " + mCurStoryBrief.title);
+                            mOnItemClickCallback.onItemClicked(mCurStoryBrief);
                         }
                     }
                 });
-            } else if (mViewType == ViewType.DATE) {
+            } else if (mViewType == StoryBrief.TYPE.DATE) {
                 mTVDate = itemView.findViewById(R.id.tv_date);
             }
         }
@@ -138,7 +146,7 @@ public class StoriesAdapter extends Adapter<StoriesAdapter.Holder> {
                 mOnItemShowCallback.onItemShowed(position);
             }
             if (storyBrief == null) return;
-            if (mViewType == ViewType.STORY_BRIEF) {
+            if (mViewType == StoryBrief.TYPE.STORY_BRIEF) {
                 mCurStoryBrief = storyBrief;
                 Moneta.q("title : " + storyBrief.title + "\nimage : " + storyBrief.image + "\ncontainer :" + mContainerView + "\nwidth :" + mContainerWidth + "\nheight :" + mContainerHeight);
                 if (storyBrief.images != null) {

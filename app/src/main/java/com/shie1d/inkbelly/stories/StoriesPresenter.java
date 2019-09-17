@@ -2,6 +2,8 @@ package com.shie1d.inkbelly.stories;
 
 import com.shie1d.inkbelly.net.zhihudaily.ZhihuDailyHttp;
 import com.shie1d.inkbelly.net.zhihudaily.bean.StoriesCollection;
+import com.shie1d.inkbelly.net.zhihudaily.bean.StoryBrief;
+import com.shie1d.inkbelly.story.StoryActivity;
 import com.shie1d.moneta.Moneta;
 
 import java.util.HashMap;
@@ -41,6 +43,11 @@ public class StoriesPresenter implements StoriesContract.IStoriesPresenter {
     @Override
     public boolean shouldAutoPullData(int position) {
         return mModel.getLastDate() != null && mModel.getStories() != null && mModel.getStories().size() - position < AUTO_PULL_THRESHOLD;
+    }
+
+    @Override
+    public void enterStory(StoryBrief clickedItem) {
+        StoryActivity.start(mView.getLogicContext(), mModel, clickedItem);
     }
 
     @Override

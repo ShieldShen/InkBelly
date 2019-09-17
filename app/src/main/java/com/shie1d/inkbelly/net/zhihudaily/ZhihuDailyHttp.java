@@ -3,6 +3,7 @@ package com.shie1d.inkbelly.net.zhihudaily;
 import com.shie1d.inkbelly.BuildConfig;
 import com.shie1d.inkbelly.net.BaseServiceProxy;
 import com.shie1d.inkbelly.net.zhihudaily.bean.StoriesCollection;
+import com.shie1d.inkbelly.net.zhihudaily.bean.StoryDetail;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -33,5 +34,9 @@ public class ZhihuDailyHttp extends BaseServiceProxy<ZhihuDailyService> {
 
     public Observable<StoriesCollection> getPastStoriesCollection(String date) {
         return mService.getPastStoriesCollection(date);
+    }
+
+    public Observable<StoryDetail> getStoryDetailCollection(long id) {
+        return mService.getStoryDetailCollection(id);
     }
 }

@@ -4,6 +4,7 @@ import com.shie1d.inkbelly.base.mvp.BaseModel;
 import com.shie1d.inkbelly.net.zhihudaily.bean.StoriesCollection;
 import com.shie1d.inkbelly.net.zhihudaily.bean.StoryBrief;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

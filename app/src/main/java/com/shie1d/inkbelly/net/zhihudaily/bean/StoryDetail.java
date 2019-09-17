@@ -1,5 +1,6 @@
 package com.shie1d.inkbelly.net.zhihudaily.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Map;
  * 故事详情
  */
 
-public class StoryDetail {
+public class StoryDetail implements Serializable{
 
     public interface TYPE {
         int ORIGINAL_SOURCE = 1;
@@ -32,4 +33,26 @@ public class StoryDetail {
     private Integer type;
     private Integer id;
     private List<String> css = new ArrayList<String>();
+
+    @Override
+    public String toString() {
+        return "StoryDetail{" +
+                "body='" + body + '\'' +
+                ", theme_name='" + theme_name + '\'' +
+                ", editor_name='" + editor_name + '\'' +
+                ", theme_id='" + theme_id + '\'' +
+                ", imageHue='" + imageHue + '\'' +
+                ", imageSource='" + imageSource + '\'' +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", image='" + image + '\'' +
+                ", shareUrl='" + shareUrl + '\'' +
+                ", js=" + js +
+                ", gaPrefix='" + gaPrefix + '\'' +
+                ", images=" + images +
+                ", type=" + type +
+                ", id=" + id +
+                ", css=" + css +
+                '}';
+    }
 }

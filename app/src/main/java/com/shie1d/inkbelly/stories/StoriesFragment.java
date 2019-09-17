@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.shie1d.inkbelly.R;
 import com.shie1d.inkbelly.base.BaseFragment;
+import com.shie1d.inkbelly.net.zhihudaily.bean.StoryBrief;
 import com.shie1d.moneta.Moneta;
 
 /**
@@ -21,7 +22,7 @@ import com.shie1d.moneta.Moneta;
  */
 
 public class StoriesFragment extends BaseFragment
-        implements StoriesContract.IStoriesView, SwipeRefreshLayout.OnRefreshListener, OnItemShowCallback {
+        implements StoriesContract.IStoriesView, SwipeRefreshLayout.OnRefreshListener, OnItemShowCallback, OnItemClickCallback {
 
     private StoriesContract.IStoriesPresenter mPresenter;
     private RecyclerView mRVStories;
@@ -81,7 +82,7 @@ public class StoriesFragment extends BaseFragment
         mSRL.setOnRefreshListener(this);
         mRVStories = view.findViewById(R.id.rv_stories);
         mRVStories.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mStoriesAdapter = new StoriesAdapter(getActivity(), this);
+        mStoriesAdapter = new StoriesAdapter(getActivity(), this, this);
         mRVStories.setAdapter(mStoriesAdapter);
     }
 
@@ -113,5 +114,10 @@ public class StoriesFragment extends BaseFragment
         if (mPresenter.shouldAutoPullData(position)) {
             mPresenter.pullPastStoriesFromServer();
         }
+    }
+
+    @Override
+    public void onItemClicked(StoryBrief clickedItem) {
+        mPresenter.enterStory(clickedItem);
     }
 }
